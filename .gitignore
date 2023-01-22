@@ -1,6 +1,3 @@
 *.pp
 *.cil
-policy*
-*.gz
-*.tar*
-*tmp*
+*.tmp
