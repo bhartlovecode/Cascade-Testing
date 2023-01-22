@@ -1,0 +1,29 @@
+policy_module(myapp, 1.0)
+
+# Type Declarations
+
+type python_exec_t;
+files_type(python_exec_t)
+
+type myapp_exec_t;
+files_type(myapp_exec_t)
+
+type myapp_t;
+domain_type(myapp_t)
+
+init_daemon_domain(myapp_t, python_exec_t)
+
+# Policy
+
+# Execute main.py program
+allow myapp_t myapp_exec_t:file exec_file_perms;
+
+# Execute library calls
+gen_require(`type usr_t;')
+allow myapp_t usr_t:file exec_file_perms;
+
+# Dontaudit rules
+gen_require(`type passwd_file_t, sssd_var_lib_t;')
+dontaudit myapp_t passwd_file_t:file read;
+dontaudit myapp_t sssd_var_lib_t:dir search;
+

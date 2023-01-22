@@ -1,0 +1,26 @@
+machine my_machine {
+	module myapp;
+	let handle_unknown_perms = reject;
+	let monolithic = "false";
+}
+
+let exec_file_perms = [ getattr open map read execute ioctl execute_no_trans ];
+
+resource myapp_exec_t {
+	file_context("/usr/local/src/Cascade-Testing/src/main.py", [any], myapp_exec_t);
+} 
+
+resource python_exec_t {
+	file_context("/opt/anaconda3/bin/python(.*)", [file], python_exec_t);
+}
+
+domain myapp_t {
+	allow(myapp_t, myapp_exec_t, file, [exec_file_perms]);
+}
+
+module myapp {
+	domain myapp_t;
+	resource myapp_exec_t;
+	resource python_exec_t;
+}
+

@@ -1,0 +1,2 @@
+/opt/anaconda3/bin/python(.*)				-- gen_context(system_u:object_r:python_exec_t)
+/usr/local/src/Cascade-Testing/src/main.py		-- gen_context(system_u:object_r:myapp_exec_t)
